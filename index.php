@@ -27,14 +27,7 @@
             <tbody>
                 <?php 
                 require __DIR__ . '/config.php';
-                
-                // $username = getenv('DB_USERNAME');
-                // $host =  getenv('DB_HOST');
-                // $password =  getenv('DB_PASSWORD');
-                // $database= getenv('DB_DATABASE');
-
-                // echo "Username: $username, Host: $host, Database: $database";
-                // create a connection
+                                // create a connection
                 $connection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
                 if($connection->connect_error){
