@@ -26,12 +26,16 @@
 
             <tbody>
                 <?php 
-                $username = getenv('DB_USERNAME');
-                $host =  getenv('DB_HOST');
-                $password =  getenv('DB_PASSWORD');
-                $database= getenv('DB_DATABASE');
+                require __DIR__ . '/config.php';
+                
+                // $username = getenv('DB_USERNAME');
+                // $host =  getenv('DB_HOST');
+                // $password =  getenv('DB_PASSWORD');
+                // $database= getenv('DB_DATABASE');
+
+                // echo "Username: $username, Host: $host, Database: $database";
                 // create a connection
-                $connection = new mysqli($host, $username, $password, $database);
+                $connection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
                 if($connection->connect_error){
                     die("Connection Failed: " . $connection->connect_error);
@@ -42,7 +46,25 @@
 
                 if(!$result){
                     die("Invalid Query: " . $connection->error);
-                }
+                };
+
+                while($row = $result-> fetch_assoc()){
+                    echo "
+                        <tr>
+                            <td>$row[id]</td>
+                            <td>$row[name]</td>
+                            <td>$row[email]</td>
+                            <td>$row[phone]</td>
+                            <td>$row[address]</td>
+                            <td>$row[created_at]</td>
+                            <td>
+                                <a class='btn btn-primary btn-sm' href='/myshop/edit.php?id=$row[id]'>Edit</a>
+                                <a class='btn btn-primary btn-sm' href='/myshop/delete.php?id=$row[id]'>Delete</a>
+                            </td>
+
+                            </tr>
+                    ";
+                };
                 ?>
             </tbody>
         </table>
