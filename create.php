@@ -7,6 +7,10 @@ $address = "";
 $successMessage = "";
 $errorMessage = "";
 
+require __DIR__ . '/config.php';                                
+// create a connection
+$connection = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
 if($_SERVER["REQUEST_METHOD"] == 'POST'){
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -19,11 +23,21 @@ if($_SERVER["REQUEST_METHOD"] == 'POST'){
             break;
         };
 
+        $sql = "INSERT INTO clients (name, email, phone, address) VALUES ('$name', '$email', '$phone', '$address')";
+        $result = $connection->query($sql);
+
+        if(!$result){
+            $errorMessage = "Invalid Query: " . $connection->error;
+            break;
+        };
         $name = "";
         $email = "";
         $phone = "";
         $address = "";
         $successMessage = "Client added successfully";
+
+        header("location: /myshop/index.php");
+        exit;
     }while(false);
 };
 ?>
